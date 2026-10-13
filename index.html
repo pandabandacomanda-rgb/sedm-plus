@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f4"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="СЭДМ+">
+<meta name="description" content="Личный дневник ситуаций, эмоций, действий и мыслей — только на вашем устройстве.">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="stylesheet" href="styles.css"><title>СЭДМ+</title>
+</head>
+<body>
+<div id="app" class="app">
+<header class="topbar"><button id="backBtn" class="icon-button hidden" aria-label="Назад">‹</button><div class="brand">СЭДМ<span>+</span></div><button id="settingsBtn" class="icon-button" aria-label="Настройки">⚙</button></header>
+<main>
+<section id="homeView" class="view active" aria-label="Главная">
+<div class="home-intro"><div class="eyebrow">ЛИЧНЫЙ ДНЕВНИК</div><h1>Побудь с собой.</h1><p>Запиши, что произошло, что почувствовал и о чём подумал.</p></div>
+<button id="newBtn" class="primary new-entry"><span class="plus">＋</span> Новая запись</button>
+<div class="home-actions"><button id="historyBtn" class="action-tile"><span class="tile-icon">▤</span><span>История</span><span class="chevron">›</span></button><button id="exportBtn" class="action-tile"><span class="tile-icon">⇩</span><span>Экспорт</span><span class="chevron">›</span></button></div><p class="privacy-foot">⌑ Записи хранятся локально на этом устройстве</p>
+</section>
+<section id="editorView" class="view" aria-label="Редактор">
+<div class="section-heading"><h1 id="editorTitle">Новая запись</h1><span id="saveIndicator" class="saved-indicator"></span></div>
+<div class="datetime-row"><label>Дата и время<input type="datetime-local" id="createdAt"></label></div>
+<div class="voice-note">🎙 Для диктовки коснись поля и используй микрофон на клавиатуре iPhone.</div>
+<div class="field"><label for="situation"><span class="field-number">01</span> Ситуация</label><textarea id="situation" rows="3" placeholder="Что произошло? Опиши факты."></textarea></div>
+<div class="field"><div class="field-label"><span class="field-number">02</span> Эмоция</div><div id="emotionChips" class="chips"></div><button id="emotionAdd" class="small-link" type="button">+ Другая эмоция</button><div id="emotionSliders" class="emotion-sliders"></div></div>
+<div class="field"><label for="behaviour"><span class="field-number">03</span> Действие</label><textarea id="behaviour" rows="3" placeholder="Что сделал или захотел сделать?"></textarea></div>
+<div class="field"><label for="thought"><span class="field-number">04</span> Мысль</label><textarea id="thought" rows="3" placeholder="Что сказал себе в этот момент?"></textarea></div>
+<details id="analysisDetails" class="analysis-details"><summary>Дополнительный анализ <span>необязательно</span></summary><div class="field"><label for="challenge">Проверка мысли</label><p class="hint">Какие факты за и против? Есть ли другое объяснение? Что бы я сказал другу?</p><textarea id="challenge" rows="4" placeholder="Что подтверждает или опровергает мою мысль?"></textarea></div><div class="field"><label for="alternative">Альтернативная мысль</label><p class="hint">Более реалистичный взгляд, соответствующий фактам.</p><textarea id="alternative" rows="3" placeholder="Как ещё можно посмотреть на ситуацию?"></textarea></div></details>
+<div class="editor-actions"><button id="saveDraftBtn" class="secondary">Сохранить черновик</button><button id="saveCompleteBtn" class="primary">Сохранить</button></div><button id="deleteEditorBtn" class="destructive-text hidden">Удалить запись</button>
+</section>
+<section id="historyView" class="view" aria-label="История"><div class="section-heading"><h1>История</h1><button id="historyNewBtn" class="compact-primary">＋ Новая</button></div><input id="searchInput" type="search" placeholder="Поиск по тексту" aria-label="Поиск"><div class="filter-row"><select id="statusFilter" aria-label="Статус"><option value="all">Все записи</option><option value="draft">Черновики</option><option value="complete">Завершённые</option></select><select id="emotionFilter" aria-label="Эмоции"><option value="">Все эмоции</option></select><input id="dateFilter" type="date" aria-label="Дата" title="Фильтр по дате"></div><button id="resetFilters" class="small-link">Сбросить фильтры</button><div id="historyCount" class="list-caption"></div><div id="entryList" class="entry-list"></div></section>
+<section id="settingsView" class="view" aria-label="Настройки"><h1>Настройки и данные</h1><div class="settings-group"><h2>Внешний вид</h2><label class="settings-line">Тема оформления <select id="themeSelect"><option value="system">Как в системе</option><option value="light">Светлая</option><option value="dark">Тёмная</option></select></label></div><div class="settings-group"><h2>Резервное копирование</h2><p>Полная копия в JSON сохраняет все поля и интенсивности. CSV подходит для просмотра в Excel.</p><div class="stack-buttons"><button id="jsonExportBtn" class="secondary">Скачать резервную копию (.json)</button><button id="csvExportBtn" class="secondary">Экспорт для Excel (.csv)</button><button id="importBtn" class="secondary">Восстановить из копии (.json)</button><input id="importInput" type="file" accept=".json,application/json" hidden></div><p class="warning">Данные хранятся в браузере на этом устройстве. Очистка данных сайта, переустановка приложения или смена iPhone могут удалить их. Регулярно сохраняй копию в защищённом месте.</p></div><div class="settings-group"><h2>Приватность</h2><p>Без учётной записи, рекламы, аналитики и передачи записей на сервер приложения. В этой версии нет встроенной блокировки Face ID: доступ к устройству защищай кодом/Face ID самого iPhone.</p><button id="deleteAllBtn" class="danger-outline">Удалить все записи</button></div><p class="version">СЭДМ+ · версия 1.0 · офлайн-дневник</p></section>
+</main><div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-panel"><h2 id="modalTitle"></h2><p id="modalBody"></p><input id="modalInput" class="hidden" maxlength="60" placeholder="Название эмоции"><div class="modal-actions"><button id="modalCancel" class="secondary">Отмена</button><button id="modalConfirm" class="primary">Подтвердить</button></div></div></div>
+</div><script src="app.js" defer></script></body></html>
